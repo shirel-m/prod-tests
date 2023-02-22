@@ -1,0 +1,31 @@
+spec_version: 2
+description: deploy azure netapp cloudmanager cvo
+
+inputs:
+  agent:
+    type: execution-host
+  vm_name:
+    type: string
+    default: "shirelvm"
+  resource_group:
+    type: string
+    default: "shirel_rg"
+
+outputs:
+  vm1_name:
+    value: '{{.grains.netapp_cm_cvo.outputs.vm_id}}'
+
+grains:
+  netapp_cm_cvo:
+    kind: terraform
+    spec:
+      source:
+        store: bps
+        path: terraform/azure_nettap_cloudmanager_cvo
+      host:
+        name: '{{ .inputs.agent }}'
+      inputs:
+        - vm_name: '{{.inputs.vm_name}}'
+        - resource_group: '{{.inputs.resource_group}}'
+      outputs:
+        - vm_id
