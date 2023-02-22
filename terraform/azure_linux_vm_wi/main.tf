@@ -63,14 +63,10 @@ resource "azurerm_linux_virtual_machine" "example" {
   location            = azurerm_resource_group.rg.location
   size                = "Standard_F2"
   admin_username      = "adminuser"
+  admin_password      = "P@$$w0rd1234!"
   network_interface_ids = [
     azurerm_network_interface.example.id,
   ]
-
-  admin_ssh_key {
-    username   = "adminuser"
-    public_key = file("~/.ssh/id_rsa.pub")
-  }
 
   os_disk {
     caching              = "ReadWrite"
