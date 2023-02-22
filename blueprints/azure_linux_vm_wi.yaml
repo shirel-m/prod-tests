@@ -1,0 +1,29 @@
+---
+description: deploy azure linux vm
+grains:
+  vm1:
+    kind: terraform
+    spec:
+      host:
+        name: {{ .inputs.agent }}
+      inputs:
+        - vm_name: {{.inputs.vm_name}}
+        - resource_group: {{.inputs.resource_group}}
+      outputs:
+        - vm_id
+      source:
+        path: terraform/azure_linux_vm_wi
+        store: bps
+inputs:
+  agent:
+    type: execution-host
+  resource_group:
+    default: vido_rg
+    type: string
+  vm_name:
+    default: vidovm
+    type: string
+outputs:
+  vm1_name:
+    value: {{.grains.vm1.outputs.vm_id}}
+spec_version: 2
